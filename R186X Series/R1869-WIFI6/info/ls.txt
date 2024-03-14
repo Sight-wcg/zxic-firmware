@@ -1,0 +1,16 @@
+total 0
+drwxrwx---    2 admin    root           952 Mar 27  2023 bin
+lrwxrwxrwx    1 admin    root            19 Mar 27  2023 cache -> /mnt/userdata/cache
+drwxr-xr-x    3 admin    root             0 Sep 30 23:57 dev
+drwxrwx---    3 admin    root           144 Mar 27  2023 etc
+drwxrwxr--    5 admin    root           414 Mar 27  2023 etc_ro
+lrwxrwxrwx    1 admin    root            20 Mar 27  2023 etc_rw -> /mnt/userdata/etc_rw
+drwxrwx---    3 admin    root          1092 Mar 27  2023 lib
+drwxrwx---    2 admin    root             3 Mar 27  2023 media
+drwxrwx---    5 admin    root            60 Mar 27  2023 mnt
+dr-xr-xr-x  114 admin    root             0 Nov  3  1987 proc
+drwxrwx---    2 admin    root          1475 Mar 27  2023 sbin
+dr-xr-xr-x   17 admin    root             0 Sep 30 23:57 sys
+drwxr-xr-x    3 admin    root             0 Sep 30 23:57 tmp
+drwxrwx---    4 admin    root            38 Mar 27  2023 usr
+lrwxrwxrwx    1 admin    root            17 Mar 27  2023 var -> /mnt/userdata/var

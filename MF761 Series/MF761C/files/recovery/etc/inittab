@@ -1,0 +1,3 @@
+::sysinit:/recovery/etc/rc
+::respawn:-/recovery/bin/login
+

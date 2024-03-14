@@ -1,0 +1,1 @@
+Linux version 3.4.110-rt140 (SCM@ZTE) (gcc version 4.9.4 (Buildroot 2015.08.1-svn2614) ) #2 PREEMPT RT Thu Nov 10 09:57:04 CST 2022

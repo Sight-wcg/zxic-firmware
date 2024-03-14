@@ -1,0 +1,368 @@
+#!/bin/sh
+
+/bin/mount -t proc proc /proc
+
+echo "Starting mdevd..."
+/bin/mount -t tmpfs mdev /dev
+/bin/mount -t sysfs sysfs /sys
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+#/sbin/mdev -s
+
+
+/bin/mount   -t  tmpfs -o rw,nosuid,nodev,noexec  tmpfs    /tmp
+mkdir /dev/pts
+#mkdir /dev/shm
+/bin/mount   -t  devpts  devpts   /dev/pts
+#/bin/mount   -t  tmpfs   tmpfs    /dev/shm
+/bin/mount   -t  debugfs none     /sys/kernel/debug
+#mount -t jffs2 -o ro mtd:nvrofs /mnt/nvrofs
+mount -t jffs2 -o ro mtd:imagefs /mnt/imagefs
+#mount -t jffs2 mtd:userdata /mnt/userdata
+mdev -s
+fs_check "normal"
+
+insmod /lib/cpko/cpko.ko
+
+###############zram#################
+echo 80 > /proc/sys/vm/swappiness
+echo 12582912 > /sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon /dev/zram0
+
+#cat /etc/motd
+mkdir -p /mnt/userdata/cache /mnt/userdata/etc_rw /mnt/userdata/var
+#echo 1 > /proc/sys/kernel/sysentry
+
+echo 2 > /proc/sys/kernel/randomize_va_space
+
+ln -s /tmp /tmp/local
+ln -s /tmp /tmp/tmp
+
+mkdir -p /tmp/mnt
+
+#####sunquan start
+mkdir -p /var/local/tmp/ppp/status
+mkdir -p /var/local/tmp/ppp/peers
+#####sunquan end
+
+mkdir -p /var/run
+mkdir -p /var/log
+mkdir -p /var/db
+mkdir -p /var/ct/tmp
+
+############TZ Support##############
+if [ ! -e /etc_rw/TZ ];then
+    cp /etc/TZ /etc_rw/TZ
+fi
+
+#echo off > /sys/kernel/debug/kmemleak
+echo 32768 > /proc/sys/kernel/msgmnb
+#####sunquan start
+ifconfig lo 127.0.0.1 up
+#####sunquan end
+
+# insmod drivers
+#KVER=`uname -r | cut -f 1 -d '-'`
+KVER=`uname -r`
+
+#####sunquan start
+mknod /dev/myioctl   c 222 0
+#####sunquan end
+
+MODULE_PATH=/lib/modules/$KVER/net
+
+#####sunquan start
+#insert ipt modules
+if [ -f $MODULE_PATH/nf_conntrack_rtsp.ko ]; then
+	insmod $MODULE_PATH/nf_conntrack_rtsp.ko
+fi
+if [ -f $MODULE_PATH/nf_nat_rtsp.ko ]; then
+	insmod $MODULE_PATH/nf_nat_rtsp.ko
+fi
+if [ -f $MODULE_PATH/ipt_classify.ko ]; then
+	insmod $MODULE_PATH/ipt_classify.ko
+fi
+if [ -f $MODULE_PATH/xt_webstr.ko ]; then
+	insmod $MODULE_PATH/xt_webstr.ko
+fi
+#####sunquan end
+
+SOUND_PATH=/lib/modules/$KVER/kernel/sound
+#insert sound modules
+#snd-soc-core.ko depends on regmap-i2c.ko
+if [ -f /lib/modules/$KVER/kernel/drivers/base/regmap/regmap-i2c.ko ]; then
+	insmod /lib/modules/$KVER/kernel/drivers/base/regmap/regmap-i2c.ko
+fi
+if [ -f $SOUND_PATH/soundcore.ko ]; then
+	insmod $SOUND_PATH/soundcore.ko
+fi
+if [ -f $SOUND_PATH/core/snd.ko ]; then
+	insmod $SOUND_PATH/core/snd.ko
+fi
+if [ -f $SOUND_PATH/core/snd-timer.ko ]; then
+	insmod $SOUND_PATH/core/snd-timer.ko
+fi
+if [ -f $SOUND_PATH/core/snd-page-alloc.ko ]; then
+	insmod $SOUND_PATH/core/snd-page-alloc.ko
+fi
+if [ -f $SOUND_PATH/core/snd-pcm.ko ]; then
+	insmod $SOUND_PATH/core/snd-pcm.ko
+fi
+if [ -f $SOUND_PATH/soc/snd-soc-core.ko ]; then
+	insmod $SOUND_PATH/soc/snd-soc-core.ko
+fi
+if [ -f $SOUND_PATH/soc/codecs/snd-soc-tlv320aic31XX.ko ]; then
+	insmod $SOUND_PATH/soc/codecs/snd-soc-tlv320aic31XX.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx29-i2s.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx29-i2s.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx29-pcm.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx29-pcm.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx297520v3-ti3100.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx297520v3-ti3100.ko
+fi
+
+##### for app core dump start
+#ulimit -c unlimited 
+#mkdir -p /cache/pid-core-dumps
+#echo /cache/pid-core-dumps/core.%e > /proc/sys/kernel/core_pattern
+##### for app core dump end
+
+echo 2048 > /proc/sys/vm/min_free_kbytes
+echo 2 > /proc/sys/vm/min_free_order_shift
+
+#nvserver &
+
+cmdline=$(cat /proc/cmdline)
+result=$(echo $cmdline | grep "bootmode=")
+if [[ "$result" != "" ]]; then
+ bootmode=${cmdline##*bootmode=}
+ bootmode=${bootmode%% *}
+else
+ bootmode="0"
+fi
+bootreason="${cmdline##*boot_reason=}"
+bootreason=${bootreason%% *}
+
+# Kevin Song add begin
+lcd_id=${cmdline##*lcd_id=}
+lcd_id=${lcd_id%% *}
+battery_idt=${cmdline##*battery_idt=}
+battery_idt=${battery_idt%% *}
+if [[ $lcd_id == "124" ]]; then
+ have_lcd="2"
+else
+ have_lcd="1"
+fi
+# Kevin Song add end
+
+#nvserver &
+
+echo 0 > /etc_rw/wifiStatus
+echo 0 > /etc_rw/wpsStatus
+echo F > /etc_rw/staStatus
+echo 0 > /etc_rw/qrStatus
+echo 0 > /etc_rw/wpsdisplayStatus
+# Kevin Song modify begin
+zte_mifi $bootreason $bootmode $have_lcd $battery_idt &
+#zte_mifi $bootreason $bootmode &
+# Kevin Song modify end
+
+nv set bootreason=$bootreason
+#echo 1 >/sys/dwc_usb/usbconfig/usbPlug
+
+if [[ $bootmode == "amt" ]]; then
+ nv set ver_mode=0
+#zte_usbCfgMng &
+zte_log_agent &
+
+ zte_amt -p 10027 &
+ 
+ 
+adbd &
+
+ exit 0
+fi
+modetype=$(nv getro usb_modetype)
+nv set ver_mode=1
+
+
+#####sunquan start
+#syslogd -O /syslogd.log -l 2 -s 1024 &
+sysctl -w net.unix.max_dgram_qlen=5000
+#syslogd -l 2 -s 10240 -f /etc/syslog.conf &
+#####sunquan end
+
+#zte_locknet &
+#at_ctl $bootreason 2>&1 1>/dev/null &
+
+#zte_drvComMng &
+#rtc-service &
+
+bootflag=$(nv get LanEnable)
+
+if [[ $bootreason == "10" ]]; then
+ nv set ver_mode=2
+fi
+
+if [[ $bootflag == "1" ]]; then
+if [[ $bootreason == "2" ]]; then
+ #zte_mmi poweroff_charger &
+# zte_usbCfgMng poweroff_charger &
+# zte_mainctrl poweroff_charger &
+ #zte_watchdog &
+ if [[ $modetype != "user" ]]; then
+adbd &
+fi
+ #zte_log_agent &
+ exit 0
+fi
+fi
+
+#zte_usbCfgMng &
+
+#if [[ $bootflag == "1" ]]; then
+#zte_mmi &
+#fi
+
+echo /sbin/modprobe -d /lib/modules/$KVER > /proc/sys/kernel/modprobe
+
+#####sunquan start
+echo 2 > /proc/sys/net/ipv6/conf/default/accept_dad
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+#####sunquan end
+
+# start the page cache/kmem cache cleanup timer in the kernel
+echo 1 > /proc/sys/vm/drop_caches
+
+#####sunquan start
+# Change default NAT policy of UDP sessions, per Win7 Logo
+# requirement for Xbox-Live. The defaut session timeout on
+# linux 3.4.5 was 30 seconds. Win7 logo requires at least
+# 70.
+echo 120 > /proc/sys/net/ipv4/netfilter/ip_conntrack_udp_timeout
+
+# treat reset close session as fin close session, set same timeout
+# this is required to pass CDRouter NAT timeout test case.
+echo 120 > /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_close
+
+# add this to support up to 20 PPTP tunnel
+echo 40 > /proc/sys/net/netfilter/nf_conntrack_expect_max
+#####sunquan end
+
+echo 0 > /proc/sys/kernel/panic
+echo 1 > /proc/sys/kernel/panic_on_oops
+echo 2 > /proc/sys/vm/panic_on_oom
+
+#add for adbd
+chmod a+rw /dev/android_adb /dev/ptmx
+chmod 640  /etc/shadow
+#mkdir -p /system/bin
+#ln -s /bin/busybox /system/bin/sh
+
+# apps start
+#internet.sh
+#zte_mainctrl &
+
+#if [[ $bootflag == "1" ]]; then
+# wifi要基于内网做配置，必须启动在内网后面
+#wifi_manager &
+#fi
+
+zte_log_agent &
+
+#zte_hotplug &
+
+#zte_watchdog &
+
+if [[ $bootflag == "1" ]]; then
+#fluxstat &
+#sntp &
+goahead &
+#sd_hotplug &
+#ccapp &
+#sms &
+#phonebook &
+fi
+
+if [[ $modetype != "user" ]]; then
+adbd &
+fi
+#mode_test&
+
+# HY add begin
+###traffic_mgmt###
+traffic_enable=$(nv get traffic_mgmt_enable)
+if [[ $traffic_enable == "1" ]]; then
+traffic_mgmt &
+fi
+# HY add end
+
+
+
+
+echo "Starting FOTA apps......!!"
+#/sbin/start_update_app.sh &
+
+if [[ $bootflag == "1" ]]; then
+#/usr/sbin/telnetd -p 4719 &
+/sbin/start_telnetd.sh &
+
+#esim lpa
+lpaflag=$(nv get enable_lpa)
+if [[ $lpaflag == "1" ]]; then
+ zte_lpa &
+fi
+fi
+
+
+# for debug
+netdog_init_set.sh
+#chmod +x /sbin/app_monitor.sh
+#app_monitor.sh open
+
+echo 0 > /proc/sys/kernel/hung_task_timeout_secs
+rm -rf /etc_rw/udhcpd*.pid
+sh /sbin/rm_dev.sh
+echo 1700 > /sys/module/net_ext_modul/parameters/skb_num_limit
+echo 700 > /sys/module/net_ext_modul/parameters/skb_max_panic
+echo 2000 > /proc/sys/net/nf_conntrack_max
+
+#zhousz add begin for TR069
+if [ -f /bin/cwmpd ]; then
+	cwmpd &
+fi
+#zhousz add end for TR069
+
+#zhousz add begin for DMP_MGMT
+if [ -f /bin/dmp_mgmt ]; then
+	dmp_mgmt &
+fi
+#zhousz add end for DMP_MGMT
+
+### lock value of TTL ###
+ttl=$(nv get ttl_value)
+if [[ $ttl != "" ]]; then
+ttl2=`expr $ttl + 1`
+echo $ttl > /proc/sys/net/ipv4/ip_default_ttl
+iptables -t mangle -A PREROUTING -i br0 -j TTL --ttl-set $ttl
+iptables -t mangle -A PREROUTING -i wan1 -j TTL --ttl-set $ttl2
+iptables -t mangle -A PREROUTING -i eth0 -j TTL --ttl-set $ttl2
+iptables -t mangle -A PREROUTING -i wlan0-vxd -j TTL --ttl-set $ttl2
+fi
+
+#zhousz add begin for XMqttClientApp
+if [ -f /bin/XMqttClientApp ]; then
+	XMqttClientApp &
+fi
+#zhousz add end for XMqttClientApp
+
+# HY Add
+terminal_mgmt_enable=$(nv get terminal_mgmt_enable)
+if [[ $terminal_mgmt_enable == "1" ]]; then
+if [ -f /bin/terminal_mgmt ]; then
+	terminal_mgmt &
+fi
+fi

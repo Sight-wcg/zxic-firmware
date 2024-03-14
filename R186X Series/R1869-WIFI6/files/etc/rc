@@ -1,0 +1,765 @@
+#!/bin/sh
+
+/bin/mount -t proc proc /proc
+
+echo "Starting mdevd..."
+/bin/mount -t tmpfs mdev /dev
+/bin/mount -t sysfs sysfs /sys
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+
+
+/bin/mount   -t  tmpfs   tmpfs    /tmp
+mkdir /dev/pts
+/bin/mount   -t  devpts  devpts   /dev/pts
+/bin/mount   -t  debugfs none     /sys/kernel/debug
+mount -t jffs2 -o ro mtd:imagefs /mnt/imagefs
+mdev -s
+fs_check "normal"
+
+
+echo 80 > /proc/sys/vm/swappiness
+echo 12582912 > /sys/block/zram0/disksize
+mkswap /dev/zram0
+swapon /dev/zram0
+
+mkdir -p /mnt/userdata/cache /mnt/userdata/etc_rw /mnt/userdata/var
+mkdir -p /mnt/userdata/bin
+echo 1 > /proc/sys/kernel/sysentry
+
+ln -s /tmp /tmp/local
+ln -s /tmp /tmp/tmp
+
+mkdir -p /tmp/mnt
+
+mkdir -p /var/local/tmp/ppp/status
+mkdir -p /var/local/tmp/ppp/peers
+
+mkdir -p /var/run
+mkdir -p /var/log
+mkdir -p /var/db
+mkdir -p /var/ct/tmp
+
+if [ ! -e /etc_rw/TZ ];then
+    cp /etc/TZ /etc_rw/TZ
+fi
+
+echo 32768 > /proc/sys/kernel/msgmnb
+ifconfig lo 127.0.0.1 up
+
+KVER=`uname -r`
+
+mknod /dev/myioctl   c 222 0
+
+MODULE_PATH=/lib/modules/$KVER/net
+
+if [ -f $MODULE_PATH/nf_conntrack_rtsp.ko ]; then
+	insmod $MODULE_PATH/nf_conntrack_rtsp.ko
+fi
+if [ -f $MODULE_PATH/nf_nat_rtsp.ko ]; then
+	insmod $MODULE_PATH/nf_nat_rtsp.ko
+fi
+if [ -f $MODULE_PATH/ipt_classify.ko ]; then
+	insmod $MODULE_PATH/ipt_classify.ko
+fi
+if [ -f $MODULE_PATH/xt_webstr.ko ]; then
+	insmod $MODULE_PATH/xt_webstr.ko
+fi
+
+SOUND_PATH=/lib/modules/$KVER/kernel/sound
+if [ -f /lib/modules/$KVER/kernel/drivers/base/regmap/regmap-i2c.ko ]; then
+	insmod /lib/modules/$KVER/kernel/drivers/base/regmap/regmap-i2c.ko
+fi
+if [ -f $SOUND_PATH/soundcore.ko ]; then
+	insmod $SOUND_PATH/soundcore.ko
+fi
+if [ -f $SOUND_PATH/core/snd.ko ]; then
+	insmod $SOUND_PATH/core/snd.ko
+fi
+if [ -f $SOUND_PATH/core/snd-timer.ko ]; then
+	insmod $SOUND_PATH/core/snd-timer.ko
+fi
+if [ -f $SOUND_PATH/core/snd-page-alloc.ko ]; then
+	insmod $SOUND_PATH/core/snd-page-alloc.ko
+fi
+if [ -f $SOUND_PATH/core/snd-pcm.ko ]; then
+	insmod $SOUND_PATH/core/snd-pcm.ko
+fi
+if [ -f $SOUND_PATH/soc/snd-soc-core.ko ]; then
+	insmod $SOUND_PATH/soc/snd-soc-core.ko
+fi
+if [ -f $SOUND_PATH/soc/codecs/snd-soc-tlv320aic31XX.ko ]; then
+	insmod $SOUND_PATH/soc/codecs/snd-soc-tlv320aic31XX.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx29-i2s.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx29-i2s.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx29-pcm.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx29-pcm.ko
+fi
+if [ -f $SOUND_PATH/soc/sanechips/snd-soc-zx297520v3-ti3100.ko ]; then
+	insmod $SOUND_PATH/soc/sanechips/snd-soc-zx297520v3-ti3100.ko
+fi
+
+
+echo 2048 > /proc/sys/vm/min_free_kbytes
+echo 2 > /proc/sys/vm/min_free_order_shift
+
+
+cmdline=$(cat /proc/cmdline)
+result=$(echo $cmdline | grep "bootmode=")
+if [[ "$result" != "" ]]; then
+ bootmode=${cmdline##*bootmode=}
+ bootmode=${bootmode%% *}
+else
+ bootmode="0"
+fi
+bootreason="${cmdline##*boot_reason=}"
+bootreason=${bootreason%% *}
+
+echo 0 > /etc_rw/wifiStatus
+echo 0 > /etc_rw/wpsStatus
+echo F > /etc_rw/staStatus
+echo 0 > /etc_rw/qrStatus
+echo 0 > /etc_rw/wpsdisplayStatus
+zte_ufi $bootreason $bootmode &
+nv set bootreason=$bootreason
+
+remo_uicc_entry=$(nv get remo_uicc_enable)
+if [[ $remo_uicc_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_uicc" ]; then
+/mnt/userdata/bin/remo_uicc &
+else
+  echo "remo_uicc NULL"
+  nv set remo_uicc_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_flow_stat_entry=$(nv get remo_flow_stat_enable)
+if [[ $remo_flow_stat_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_flow_stat" ]; then
+/mnt/userdata/bin/remo_flow_stat &
+else
+  echo "remo_flow_stat NULL"
+  nv set remo_flow_stat_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_net_monitor_entry=$(nv get remo_net_monitor_enable)
+if [[ $remo_net_monitor_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_net_monitor" ]; then
+/mnt/userdata/bin/remo_net_monitor &
+else
+  echo "remo_net_monitor NULL"
+  nv set remo_net_monitor_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_dm_main_entry=$(nv get remo_dm_main_enable)
+if [[ $remo_dm_main_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_dm_main" ]; then
+/mnt/userdata/bin/remo_dm_main &
+else
+  echo "remo_dm_main NULL"
+  nv set remo_dm_main_enable=0
+  nv save
+  reboot
+fi
+fi
+
+wlan_entry=$(nv get wlan_enable)
+if [[ $wlan_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/wlan" ]; then
+/mnt/userdata/bin/wlan &
+else
+  echo "wlan NULL"
+  nv set wlan_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_flow_mgmt_entry=$(nv get remo_flow_mgmt_enable)
+if [[ $remo_flow_mgmt_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_flow_mgmt" ]; then
+/mnt/userdata/bin/remo_flow_mgmt &
+else
+  echo "remo_flow_mgmt NULL"
+  nv set remo_flow_mgmt_enable=0
+  nv save
+  reboot
+fi
+fi
+
+zte_hotplug_entry=$(nv get zte_hotplug_enable)
+if [[ $zte_hotplug_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_hotplug" ]; then
+/mnt/userdata/bin/zte_hotplug &
+else
+  echo "zte_hotplug NULL"
+  nv set zte_hotplug_enable=0
+  nv save
+  reboot
+fi
+fi
+
+zte_drv_serial_ctrl_entry=$(nv get zte_drv_serial_ctrl_enable)
+if [[ $zte_drv_serial_ctrl_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_drv_serial_ctrl" ]; then
+/mnt/userdata/bin/zte_drv_serial_ctrl &
+else
+  echo "zte_drv_serial_ctrl NULL"
+  nv set zte_drv_serial_ctrl_enable=0
+  nv save
+  reboot
+fi
+fi
+
+at_ctl_entry=$(nv get at_ctl_enable)
+if [[ $at_ctl_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/at_ctl" ]; then
+/mnt/userdata/bin/at_ctl &
+else
+  echo "at_ctl NULL"
+  nv set at_ctl_enable=0
+  nv save
+  reboot
+fi
+fi
+
+rtc_service_entry=$(nv get rtc_service_enable)
+if [[ $rtc_service_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/rtc_service" ]; then
+/mnt/userdata/bin/rtc_service &
+else
+  echo "rtc_service NULL"
+  nv set rtc_service_enable=0
+  nv save
+  reboot
+fi
+fi
+
+zte_mainctrl_entry=$(nv get zte_mainctrl_enable)
+if [[ $zte_mainctrl_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_mainctrl" ]; then
+/mnt/userdata/bin/zte_mainctrl &
+else
+  echo "zte_mainctrl NULL"
+  nv set zte_mainctrl_enable=0
+  nv save
+  reboot
+fi
+fi
+
+zte_mmi_entry=$(nv get zte_mmi_enable)
+if [[ $zte_mmi_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_mmi" ]; then
+/mnt/userdata/bin/zte_mmi &
+else
+  echo "zte_mmi NULL"
+  nv set zte_mmi_enable=0
+  nv save
+  reboot
+fi
+fi
+
+zte_drv_usb_ctrl_entry=$(nv get zte_drv_usb_ctrl_enable)
+if [[ $zte_drv_usb_ctrl_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_drv_usb_ctrl" ]; then
+/mnt/userdata/bin/zte_drv_usb_ctrl &
+else
+  echo "zte_drv_usb_ctrl NULL"
+  nv set zte_drv_usb_ctrl_enable=0
+  nv save
+  reboot
+fi
+fi
+
+fluxstat_entry=$(nv get fluxstat_enable)
+if [[ $fluxstat_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/fluxstat" ]; then
+/mnt/userdata/bin/fluxstat &
+else
+  echo "fluxstat NULL"
+  nv set fluxstat_enable=0
+  nv save
+  reboot
+fi
+fi
+
+sntp_entry=$(nv get sntp_enable)
+if [[ $sntp_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/sntp" ]; then
+/mnt/userdata/bin/sntp &
+else
+  echo "sntp NULL"
+  nv set sntp_enable=0
+  nv save
+  reboot
+fi
+fi
+
+sms_entry=$(nv get sms_enable)
+if [[ $sms_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/sms" ]; then
+/mnt/userdata/bin/sms &
+else
+  echo "sms NULL"
+  nv set sms_enable=0
+  nv save
+  reboot
+fi
+fi
+
+phonebook_entry=$(nv get phonebook_enable)
+if [[ $phonebook_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/phonebook" ]; then
+/mnt/userdata/bin/phonebook &
+else
+  echo "phonebook NULL"
+  nv set phonebook_enable=0
+  nv save
+  reboot
+fi
+fi
+
+fota_dm_entry=$(nv get fota_dm_enable)
+if [[ $fota_dm_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/fota_dm" ]; then
+/mnt/userdata/bin/fota_dm &
+else
+  echo "fota_dm NULL"
+  nv set fota_dm_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_sale_statistics_entry=$(nv get remo_sale_statistics_enable)
+if [[ $remo_sale_statistics_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_sale_statistics" ]; then
+/mnt/userdata/bin/remo_sale_statistics &
+else
+  echo "remo_sale_statistics NULL"
+  nv set remo_sale_statistics_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app0_entry=$(nv get remo_app0_enable)
+if [[ $remo_app0_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app0" ]; then
+/mnt/userdata/bin/remo_app0 &
+else
+  echo "remo_app0 NULL"
+  nv set remo_app0_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app1_entry=$(nv get remo_app1_enable)
+if [[ $remo_app1_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app1" ]; then
+/mnt/userdata/bin/remo_app1 &
+else
+  echo "remo_app1 NULL"
+  nv set remo_app1_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app2_entry=$(nv get remo_app2_enable)
+if [[ $remo_app2_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app2" ]; then
+/mnt/userdata/bin/remo_app2 &
+else
+  echo "remo_app2 NULL"
+  nv set remo_app2_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app3_entry=$(nv get remo_app3_enable)
+if [[ $remo_app3_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app3" ]; then
+/mnt/userdata/bin/remo_app3 &
+else
+  echo "remo_app3 NULL"
+  nv set remo_app3_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app4_entry=$(nv get remo_app4_enable)
+if [[ $remo_app4_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app4" ]; then
+/mnt/userdata/bin/remo_app4 &
+else
+  echo "remo_app4 NULL"
+  nv set remo_app4_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app5_entry=$(nv get remo_app5_enable)
+if [[ $remo_app5_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app5" ]; then
+/mnt/userdata/bin/remo_app5 &
+else
+  echo "remo_app5 NULL"
+  nv set remo_app5_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app6_entry=$(nv get remo_app6_enable)
+if [[ $remo_app6_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app6" ]; then
+/mnt/userdata/bin/remo_app6 &
+else
+  echo "remo_app6 NULL"
+  nv set remo_app6_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app7_entry=$(nv get remo_app7_enable)
+if [[ $remo_app7_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app7" ]; then
+/mnt/userdata/bin/remo_app7 &
+else
+  echo "remo_app7 NULL"
+  nv set remo_app7_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app8_entry=$(nv get remo_app8_enable)
+if [[ $remo_app8_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app8" ]; then
+/mnt/userdata/bin/remo_app8 &
+else
+  echo "remo_app8 NULL"
+  nv set remo_app8_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_app9_entry=$(nv get remo_app9_enable)
+if [[ $remo_app9_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_app9" ]; then
+/mnt/userdata/bin/remo_app9 &
+else
+  echo "remo_app9 NULL"
+  nv set remo_app9_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appa_entry=$(nv get remo_appa_enable)
+if [[ $remo_appa_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appa" ]; then
+/mnt/userdata/bin/remo_appa &
+else
+  echo "remo_appa NULL"
+  nv set remo_appa_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appb_entry=$(nv get remo_appb_enable)
+if [[ $remo_appb_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appb" ]; then
+/mnt/userdata/bin/remo_appb &
+else
+  echo "remo_appb NULL"
+  nv set remo_appb_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appc_entry=$(nv get remo_appc_enable)
+if [[ $remo_appc_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appc" ]; then
+/mnt/userdata/bin/remo_appc &
+else
+  echo "remo_appc NULL"
+  nv set remo_appc_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appd_entry=$(nv get remo_appd_enable)
+if [[ $remo_appd_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appd" ]; then
+/mnt/userdata/bin/remo_appd &
+else
+  echo "remo_appd NULL"
+  nv set remo_appd_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appe_entry=$(nv get remo_appe_enable)
+if [[ $remo_appe_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appe" ]; then
+/mnt/userdata/bin/remo_appe &
+else
+  echo "remo_appe NULL"
+  nv set remo_appe_enable=0
+  nv save
+  reboot
+fi
+fi
+
+remo_appf_entry=$(nv get remo_appf_enable)
+if [[ $remo_appf_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_appf" ]; then
+/mnt/userdata/bin/remo_appf &
+else
+  echo "remo_appf NULL"
+  nv set remo_appf_enable=0
+  nv save
+  reboot
+fi
+fi
+
+if [[ $bootmode == "amt" ]]; then
+ nv set ver_mode=0
+zte_log_agent &
+
+ zte_amt -p 10027 &
+
+
+adbd &
+
+ exit 0
+fi
+modetype=$(nv getro usb_modetype)
+nv set ver_mode=1
+
+
+sysctl -w net.unix.max_dgram_qlen=5000
+
+
+
+bootflag=$(nv get LanEnable)
+
+if [[ $bootreason == "10" ]]; then
+ nv set ver_mode=2
+fi
+
+if [[ $bootflag == "1" ]]; then
+if [[ $bootreason == "2" ]]; then
+ if [[ $modetype != "user" ]]; then
+echo "adbd.....PowerOff_CHG.......!!!"
+fi
+ exit 0
+fi
+fi
+
+
+
+echo /sbin/modprobe -d /lib/modules/$KVER > /proc/sys/kernel/modprobe
+
+echo 2 > /proc/sys/net/ipv6/conf/default/accept_dad
+echo 1 > /proc/sys/net/ipv6/conf/all/forwarding
+
+echo 1 > /proc/sys/vm/drop_caches
+
+echo 120 > /proc/sys/net/ipv4/netfilter/ip_conntrack_udp_timeout
+
+echo 120 > /proc/sys/net/ipv4/netfilter/ip_conntrack_tcp_timeout_close
+
+echo 40 > /proc/sys/net/netfilter/nf_conntrack_expect_max
+
+echo 0 > /proc/sys/kernel/panic
+echo 1 > /proc/sys/kernel/panic_on_oops
+echo 2 > /proc/sys/vm/panic_on_oom
+
+chmod a+rw /dev/android_adb /dev/ptmx
+chmod 640  /etc/shadow
+
+
+
+zte_log_agent &
+
+
+
+if [[ $bootflag == "1" ]]; then
+
+goahead_entry=$(nv get goahead_enable)
+if [[ $goahead_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/goahead" ]; then
+/mnt/userdata/bin/goahead &
+else
+  echo "goahead NULL"
+  nv set goahead_enable=0
+  nv save
+  reboot
+fi
+else
+goahead &
+fi
+
+zte_bip_entry=$(nv get zte_bip_enable)
+if [[ $zte_bip_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/zte_bip" ]; then
+/mnt/userdata/bin/zte_bip &
+else
+  echo "zte_bip NULL"
+  nv set zte_bip_enable=0
+  nv save
+  reboot
+fi
+else
+zte_bip_enable=$(nv get zte_bip_app_enable)
+if [[ $zte_bip_enable == "1" ]]; then
+zte_bip &
+fi
+fi
+
+
+remo_fota_se_entry=$(nv get remo_fota_se_enable)
+if [[ $remo_fota_se_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_fota_se" ]; then
+/mnt/userdata/bin/remo_fota_se &
+else
+  echo "remo_fota_se NULL"
+  nv set remo_fota_se_enable=0
+  nv save
+  reboot
+fi
+else
+remo_fota_se &
+fi
+
+
+autoflag=$(nv get kuyuapp_enable)
+if [[ $autoflag == "1" ]]; then
+kuyu_mifi &
+fi
+
+huahai_entry=$(nv get huahai_enable)
+if [[ $huahai_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/huahai" ]; then
+/mnt/userdata/bin/huahai &
+/bin/pingCheck.sh &
+else
+  echo "huahai NULL"
+  nv set huahai_enable=0
+  nv save
+  reboot
+fi
+else
+huahai_enable=$(nv get huahaiapp_enable)
+if [[ $huahai_enable == "1" ]]; then
+huahai &
+/bin/pingCheck.sh &
+fi
+fi
+
+juhuo_entry=$(nv get juhuo_enable)
+if [[ $juhuo_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/juhuo" ]; then
+/mnt/userdata/bin/juhuo &
+/bin/pingCheck.sh &
+else
+  echo "juhuo NULL"
+  nv set juhuo_enable=0
+  nv save
+  reboot
+fi
+else
+juhuo_enable=$(nv get juhuoapp_enable)
+if [[ $juhuo_enable == "1" ]]; then
+juhuo &
+/bin/pingCheck.sh &
+fi
+fi
+
+
+remo_mqtt_entry=$(nv get remo_mqtt_enable)
+if [[ $remo_mqtt_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_mqtt" ]; then
+/mnt/userdata/bin/remo_mqtt &
+else
+  echo "remo_mqtt NULL"
+  nv set remo_mqtt_enable=0
+  nv save
+  reboot
+fi
+else
+remo_mqtt_enable=$(nv get remo_mqtt_app_enable)
+if [[ $remo_mqtt_enable == "1" ]]; then
+remo_mqtt &
+fi
+fi
+
+remo_mqtt_dev_entry=$(nv get remo_mqtt_dev_enable)
+if [[ $remo_mqtt_dev_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_mqtt_dev" ]; then
+/mnt/userdata/bin/remo_mqtt_dev &
+else
+  echo "remo_mqtt_dev NULL"
+  nv set remo_mqtt_dev_enable=0
+  nv save
+  reboot
+fi
+else
+remo_mqtt_dev &
+fi
+
+remo_fota_watchdog_entry=$(nv get remo_fota_watchdog_enable)
+if [[ $remo_fota_watchdog_entry == "1" ]]; then
+if [ -f "/mnt/userdata/bin/remo_fota_watchdog" ]; then
+/mnt/userdata/bin/remo_fota_watchdog &
+else
+  echo "remo_fota_watchdog NULL"
+  nv set remo_fota_watchdog_enable=0
+  nv save
+  reboot
+fi
+fi
+
+fi
+
+if [[ $modetype != "user" ]]; then
+echo "adbd............!!!"
+fi
+
+echo "Starting FOTA apps......!!"
+
+if [[ $bootflag == "1" ]]; then
+/sbin/start_telnetd.sh &
+fi
+
+netdog_init_set.sh
+
+echo 0 > /proc/sys/kernel/hung_task_timeout_secs
+rm -rf /etc_rw/udhcpd*.pid
+sh /sbin/rm_dev.sh
+echo 1700 > /sys/module/net_ext_modul/parameters/skb_num_limit
+echo 700 > /sys/module/net_ext_modul/parameters/skb_max_panic
+echo 2000 > /proc/sys/net/nf_conntrack_max
+echo "ufiwakelock" >/sys/power/wake_lock

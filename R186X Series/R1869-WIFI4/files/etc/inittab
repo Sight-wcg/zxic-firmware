@@ -1,0 +1,3 @@
+::sysinit:/etc/rc
+::respawn:-/bin/login
+

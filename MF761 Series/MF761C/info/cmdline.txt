@@ -1,0 +1,1 @@
+root=/dev/mtdblock4 ro rootfstype=jffs2 console=ttyS1,921600 no_console_suspend mtdparts=spi-nor-dt:64k@0x0(zloader),512k@0x10000(nvrofs),256k@0x90000(uboot),4608k@0xd0000(imagefs),9600k@0x550000(rootfs),1344k@0xeb0000(userdata) lcd_id=0 battery_idt=0 boot_reason=0

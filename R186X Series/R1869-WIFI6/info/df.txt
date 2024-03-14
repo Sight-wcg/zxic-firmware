@@ -1,0 +1,5 @@
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mtdblock4            3072      3072         0 100% /
+mtd:imagefs               4352      4144       208  95% /mnt/imagefs
+/dev/mtdblock5             448       148       300  33% /mnt/userdata
+/dev/mtdblock1             224       160        64  71% /mnt/nvrofs

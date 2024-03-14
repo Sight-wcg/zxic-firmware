@@ -1,0 +1,11 @@
+{
+    "name": "WebUI 1.0",
+    "description": "WebUI 1.0",
+    "version": "1.0.0",
+    "url": "http://www.demo.com",
+    "options": {
+        "outdir": "../../apidoc",
+		"ignorePaths": ["lib"],
+		"exclude": "lib"
+    }
+}

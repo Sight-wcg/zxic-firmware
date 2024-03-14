@@ -1,0 +1,954 @@
+[04:47:23]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=00017301FA11
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=00017301FA12
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=00017301FA10
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:26]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:21]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=00017301FA11
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=00017301FA12
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=00017301FA10
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:24]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:21]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=00017301FA11
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=00017301FA12
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=00017301FA10
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:24]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:25]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:28]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[13:00:37]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[15:52:40]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[08:00:27]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[08:00:30]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:25]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:21]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:24]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:23]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:26]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:25]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:24]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:28]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:23]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:26]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:25]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:25]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:22]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:26]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:26]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:29]init.shenddddddddddddddddddd
+wlan0 start success
+ 
+[04:47:21]init.shstarttttttttttttttttt
+realtek rtl_get_available_wlan
+realtek rtl_start_wlan_if
+Initialize wlan0 interface
+iwpriv wlan0 set_mib vap_enable=1
+<<<wlan_8192c.sh wlan0>>>
+wlan0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_mode =0 
+iwpriv wlan0 set_mib hwaddr=12345678ffbb
+set RF parameters
+wifi_lte_intr=1  iwpriv wlan0 set_mib ch_low=5
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va0 interface
+<<<wlan_8192c.sh wlan0-va0>>>
+wlan0-va0 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled =0 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_mode =0 
+iwpriv wlan0-va0 set_mib hwaddr=5CE8D30879FC
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-va1 interface
+<<<wlan_8192c.sh wlan0-va1>>>
+wlan0-va1 config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_mode =0 
+iwpriv wlan0-va1 set_mib hwaddr=FC617913344F
+set RF parameters
+Set 11n parameter
+wpa relative settings
+Initialize wlan0-vxd interface
+<<<wlan_8192c.sh wlan0-vxd>>>
+wlan0-vxd config para
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled =1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_mode =1 
+iwpriv wlan0-vxd copy_mib
+iwpriv wlan0-vxd set_mib hwaddr=FC617913344F
+wlan0-vxd do not set para, exit directly
+realtek rtl_start_no_gw
+<<<bridge.sh br0 eth0 wlan0 wlan0-va0 wlan0-va1 wlan0-vxd>>>
+/etc_rw/wifi/realtek/rtl8192c/wlan0/wlan_disabled = 0 
+ifconfig wlan0 up
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va0/wlan_disabled = 0 
+ifconfig wlan0-va0 up
+wlan0-va0  has not been added to brctl :: 
+brctl addif br0 wlan0-va0
+/etc_rw/wifi/realtek/rtl8192c/wlan0-va1/wlan_disabled = 1 
+/etc_rw/wifi/realtek/rtl8192c/wlan0-vxd/wlan_disabled = 1 
+[04:47:25]init.shenddddddddddddddddddd
+wlan0 start success
+ 

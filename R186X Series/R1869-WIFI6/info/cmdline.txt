@@ -1,0 +1,1 @@
+root=/dev/mtdblock4 rootfstype=squashfs console=ttyS1,921600 no_console_suspend mtdparts=spi-nor-dt:32k@0x0(zloader),224k@0x8000(nvrofs),160k@0x40000(uboot),4352k@0x68000(imagefs),2976k@0x4a8000(rootfs),448k@0x790000(userdata) boot_reason=0 SIM=1 system=normal

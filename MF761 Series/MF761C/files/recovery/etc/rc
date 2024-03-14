@@ -1,0 +1,30 @@
+#!/recovery/bin/sh
+
+mount -t proc proc /proc
+
+echo "Starting mdevd..."
+mount -t tmpfs mdev /dev
+mount -t sysfs sysfs /sys
+echo /recovery/sbin/mdev > /proc/sys/kernel/hotplug
+
+mount -t ramfs    ramfs    /tmp
+mkdir /dev/pts
+mkdir /dev/shm
+mount -t  devpts  devpts   /dev/pts
+mount -t  tmpfs   tmpfs    /dev/shm
+mount -t  debugfs none     /sys/kernel/debug
+
+mount -t jffs2 -o ro mtd:imagefs /mnt/imagefs
+#mount -t jffs2 -o ro mtd:resource /mnt/resource
+#mount -t jffs2 mtd:userdata /mnt/userdata
+
+mdev -s
+
+fs_check_recovery "recovery"
+
+mkdir -p /mnt/userdata/cache /mnt/userdata/etc_rw /mnt/userdata/var
+
+echo "Starting FOTA Recovery application!"
+
+# start fota upi
+fota_upi --upgrade system &

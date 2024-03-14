@@ -1,0 +1,7 @@
+dev:    size   erasesize  name
+mtd0: 00008000 00008000 "zloader"
+mtd1: 00038000 00008000 "nvrofs"
+mtd2: 00028000 00008000 "uboot"
+mtd3: 00440000 00008000 "imagefs"
+mtd4: 002d8000 00008000 "rootfs"
+mtd5: 00080000 00008000 "userdata"

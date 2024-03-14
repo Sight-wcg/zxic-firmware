@@ -1,0 +1,22 @@
+Info: internet.sh start
+Info: 
+Info: lan.sh start
+Info: user-config-udhcpd.sh start
+Info: config-udhcpd.sh lan -d 192.168.0.1
+Info: config-udhcpd.sh lan -g 192.168.0.1
+Info: config-udhcpd.sh lan -r 1 start
+Info: user-config-udhcpd.sh start
+Info: config-udhcpd.sh lan -d 192.168.0.1
+Info: config-udhcpd.sh lan -g 192.168.0.1
+Info: upnp.sh start 
+Info: upnp_ipt_remove.sh start
+Info: set fastnat_level£º2
+Info: set nofast_port£º21+22+23+25+53+67+68+69+110+115+123+443+500+1352+1723+1990+1991+1992+1993+1994+1995+1996+1997+1998+4500+5060
+Info: landev_updown.sh usblan up start
+Info: landev_updown.sh usblan up start
+Info: wan_ipv4.sh linkup pswan 1 start
+Info: nat.sh start 
+Info: defwan_set.sh pswan start
+Info: firewall_init.sh start
+Info: upnp.sh start 
+Info: upnp_ipt_remove.sh start
